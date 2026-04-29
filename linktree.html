@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bettega Race Club | 貝堤加賽道俱樂部</title>
+    
+    <!-- 引入 Remix Icon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+
+        body {
+            background-color: #000;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* 玻璃質感卡片 */
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.11);
+            border-color: rgba(255, 255, 255, 0.22);
+        }
+
+        /* 側邊條設計 */
+        .side-indicator {
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 3px;
+            transition: width 0.3s ease;
+        }
+        .group:hover .side-indicator { width: 6px; }
+
+        /* 閃爍光影掃描 (Shimmer) */
+        .shimmer {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.08) 50%, transparent 60%);
+        }
+        .group:hover .shimmer {
+            opacity: 1;
+            animation: shimmerMove 1.8s infinite;
+        }
+        @keyframes shimmerMove {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* 背景 Canvas */
+        #bgCanvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+        }
+
+        /* Logo 外框圓角 */
+        .logo-frame {
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.03);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            border-radius: 12px;
+            transition: all 0.5s ease;
+            display: inline-block;
+        }
+        .logo-frame:hover {
+            border-color: rgba(255, 255, 255, 0.35);
+            transform: translateY(-3px);
+        }
+        .logo-img { border-radius: 10px; display: block; }
+    </style>
+</head>
+<body>
+
+    <!-- 緩慢流光背景 -->
+    <canvas id="bgCanvas"></canvas>
+
+    <div class="relative z-10 flex flex-col items-center min-h-screen py-12 px-6">
+        <div class="w-full max-w-[440px] flex flex-col items-center">
+            
+            <!-- Logo 區 -->
+            <div class="mb-10">
+                <div class="logo-frame p-1.5">
+                    <div class="w-[280px]">
+                        <img src="https://static.readdy.ai/image/361c5b7f3d35f7f563e715101385cc27/1ee710ce57c9d0d9ade5eae6eba23424.jpeg" 
+                             alt="Bettega Race Club" class="w-full h-auto logo-img">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 標題區 -->
+            <section class="text-center mb-10">
+                <h1 class="text-[22px] font-black tracking-[3px] uppercase italic text-white">Bettega Race Club</h1>
+                <p class="text-base font-bold tracking-[4px] mt-1 text-white/90">貝堤加賽道俱樂部</p>
+                <div class="flex items-center justify-center gap-2 my-6">
+                    <div class="w-10 h-[1px] bg-white/20"></div>
+                    <div class="w-8 h-[3px] bg-[#E8001D] rounded-full"></div>
+                    <div class="w-10 h-[1px] bg-white/20"></div>
+                </div>
+                <p class="text-[14px] font-medium tracking-[2px] text-white/80">賽道日｜計時賽｜車聚活動</p>
+                <p class="text-[12px] italic text-white/40 mt-1">讓你的車，不只在路上</p>
+            </section>
+
+            <!-- 按鈕連結區 -->
+            <div class="w-full flex flex-col gap-3.5 mb-10">
+                <a href="https://forms.gle/Bq2rFSuSngm785tp7" target="_blank" class="group relative btn-glass rounded-2xl h-[76px] flex items-center px-5 overflow-hidden active:scale-[0.98]">
+                    <div class="side-indicator bg-[#E8001D]"></div>
+                    <div class="shimmer"></div>
+                    <div class="w-11 h-11 flex items-center justify-center rounded-xl bg-[#E8001D]/15 mr-4 transition-transform group-hover:scale-110">
+                        <i class="ri-fire-fill text-[#E8001D] text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-[16px] font-bold text-white">立即報名｜賽道日</h3>
+                        <p class="text-[11px] text-white/30 uppercase tracking-wider">Track Day — 限額開放中</p>
+                    </div>
+                    <i class="ri-arrow-right-s-line text-xl opacity-20 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
+                </a>
+
+                <a href="https://www.facebook.com/profile.php" target="_blank" class="group relative btn-glass rounded-2xl h-[68px] flex items-center px-5 overflow-hidden active:scale-[0.98]">
+                    <div class="side-indicator bg-[#4A7FFF]"></div>
+                    <div class="shimmer"></div>
+                    <div class="w-11 h-11 flex items-center justify-center rounded-xl bg-[#4A7FFF]/15 mr-4 transition-transform group-hover:scale-110">
+                        <i class="ri-megaphone-line text-[#4A7FFF] text-xl"></i>
+                    </div>
+                    <div class="flex-1 font-bold text-[15px] text-white/90">最新消息</div>
+                    <i class="ri-arrow-right-s-line text-xl opacity-20 group-hover:opacity-100 transition-all"></i>
+                </a>
+
+                <a href="https://forms.gle/Bq2rFSuSngm785tp7" target="_blank" class="group relative btn-glass rounded-2xl h-[68px] flex items-center px-5 overflow-hidden active:scale-[0.98]">
+                    <div class="side-indicator bg-white/80"></div>
+                    <div class="shimmer"></div>
+                    <div class="w-11 h-11 flex items-center justify-center rounded-xl bg-white/10 mr-4 transition-transform group-hover:scale-110">
+                        <i class="ri-steering-2-line text-white text-xl"></i>
+                    </div>
+                    <div class="flex-1 font-bold text-[15px] text-white/90">車聚活動參加</div>
+                    <i class="ri-arrow-right-s-line text-xl opacity-20 group-hover:opacity-100 transition-all"></i>
+                </a>
+
+                <a href="https://forms.gle/Bq2rFSuSngm785tp7" target="_blank" class="group relative btn-glass rounded-2xl h-[68px] flex items-center px-5 overflow-hidden active:scale-[0.98]">
+                    <div class="side-indicator bg-[#FF6B35]"></div>
+                    <div class="shimmer"></div>
+                    <div class="w-11 h-11 flex items-center justify-center rounded-xl bg-[#FF6B35]/15 mr-4 transition-transform group-hover:scale-110">
+                        <i class="ri-play-circle-line text-[#FF6B35] text-xl"></i>
+                    </div>
+                    <div class="flex-1 font-bold text-[15px] text-white/90">活動精彩回顧</div>
+                    <i class="ri-arrow-right-s-line text-xl opacity-20 group-hover:opacity-100 transition-all"></i>
+                </a>
+            </div>
+
+            <!-- Follow & Web -->
+            <section class="w-full">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="flex-1 h-[1px] bg-white/10"></div>
+                    <span class="text-[10px] tracking-[4px] text-white/30 uppercase font-bold">Official Info</span>
+                    <div class="flex-1 h-[1px] bg-white/10"></div>
+                </div>
+                <div class="flex gap-3">
+                    <a href="https://bettega2017-oss.github.io/bettegaraceclub/" target="_blank" class="flex-1 btn-glass h-[56px] rounded-2xl flex items-center justify-center gap-3 group overflow-hidden relative">
+                        <div class="shimmer"></div>
+                        <i class="ri-global-line text-xl group-hover:text-blue-400 transition-colors"></i>
+                        <span class="text-sm font-bold text-white/90">官方網站</span>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php" target="_blank" class="flex-1 btn-glass h-[56px] rounded-2xl flex items-center justify-center gap-3 group overflow-hidden relative">
+                        <div class="shimmer"></div>
+                        <i class="ri-facebook-box-fill text-xl group-hover:text-[#1877F2] transition-colors"></i>
+                        <span class="text-sm font-bold text-white/90">Facebook</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="mt-12 flex flex-col items-center">
+                <div class="flex gap-1.5 mb-5 opacity-40">
+                    <div class="w-5 h-[1.5px] bg-[#E8001D]"></div>
+                    <div class="w-5 h-[1.5px] bg-white"></div>
+                    <div class="w-5 h-[1.5px] bg-[#0D1B8E]"></div>
+                </div>
+                <p class="text-[9px] tracking-[3px] text-white/20 uppercase font-medium">© 2025 Bettega Race Club</p>
+            </footer>
+
+        </div>
+    </div>
+
+    <!-- 調整後的緩慢流光腳本 -->
+    <script>
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let orbs = [];
+
+        class LightTrail {
+            constructor() {
+                this.reset();
+                this.x = Math.random() * canvas.width; // 初始位置隨機分布
+            }
+            reset() {
+                this.x = -600; // 從螢幕左側更遠處開始
+                this.y = Math.random() * canvas.height;
+                this.length = Math.random() * 400 + 300; // 大幅增加長度 (300px - 700px)
+                this.speed = Math.random() * 0.8 + 0.2; // 極慢速度 (0.2 - 1.0)
+                this.width = Math.random() * 1.2 + 0.3;
+                this.color = Math.random() > 0.5 ? '#E8001D' : '#FFFFFF';
+                this.opacity = Math.random() * 0.2 + 0.05; // 降低不透明度，產生優雅感
+            }
+            update() {
+                this.x += this.speed;
+                if (this.x > canvas.width + this.length) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.beginPath();
+                const grad = ctx.createLinearGradient(this.x, this.y, this.x - this.length, this.y);
+                // 產生平滑的絲綢感漸層
+                grad.addColorStop(0, 'transparent');
+                grad.addColorStop(0.5, this.color + Math.floor(this.opacity * 255).toString(16).padStart(2, '0'));
+                grad.addColorStop(1, 'transparent');
+                
+                ctx.strokeStyle = grad;
+                ctx.lineWidth = this.width;
+                ctx.lineCap = 'round';
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x - this.length, this.y);
+                ctx.stroke();
+            }
+        }
+
+        function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            orbs = [];
+            // 背景深處的微弱光暈
+            for (let i = 0; i < 4; i++) {
+                orbs.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 400 + 300,
+                    vx: (Math.random() - 0.5) * 0.2,
+                    vy: (Math.random() - 0.5) * 0.2,
+                    color: i === 0 ? 'rgba(232, 0, 29, 0.04)' : 'rgba(60, 60, 60, 0.06)'
+                });
+            }
+            // 緩慢橫向流光
+            for (let i = 0; i < 12; i++) {
+                particles.push(new LightTrail());
+            }
+        }
+
+        function animate() {
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // 繪製背景底光
+            orbs.forEach(orb => {
+                orb.x += orb.vx; orb.y += orb.vy;
+                if (orb.x < 0 || orb.x > canvas.width) orb.vx *= -1;
+                if (orb.y < 0 || orb.y > canvas.height) orb.vy *= -1;
+                const g = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orb.radius);
+                g.addColorStop(0, orb.color);
+                g.addColorStop(1, 'transparent');
+                ctx.fillStyle = g;
+                ctx.beginPath();
+                ctx.arc(orb.x, orb.y, orb.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // 繪製極慢流光
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', init);
+        init();
+        animate();
+    </script>
+</body>
+</html>
