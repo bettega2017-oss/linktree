@@ -68,6 +68,24 @@
         }
 
         /* Logo 外框圓角 */
+        .logo-frame { 
+            border: 1px solid rgba(255, 255, 255, 0.18); 
+            background: rgba(255, 255, 255, 0.03); 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); 
+            border-radius: 12px; 
+            transition: all 0.5s ease; 
+            display: inline-block; 
+        } 
+        
+        .logo-frame:hover { 
+            border-color: rgba(255, 255, 255, 0.35); 
+            transform: translateY(-3px); 
+        } 
+        
+        .logo-img { 
+            border-radius: 10px; display: block; 
+        }
+        
         .logo-frame-advanced {
             position: relative;
             width: 280px;
